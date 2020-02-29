@@ -4,6 +4,7 @@
   flex-direction: column;
   height: 350px;
   align-items: center;
+  position: relative;
 
   .image {
     width: 100%;
@@ -11,6 +12,27 @@
     background-size: cover;
     background-position: center;
     margin-bottom: 5px;
+  }
+
+  .customButton {
+    min-width: 155px;
+    width: 75%;
+    opacity: 0.7;
+    position: absolute;
+    top: 255px;
+    right: 30px;
+    display: none;
+  }
+
+  &:hover {
+    .image {
+      opacity: 0.8;
+    }
+
+    .customButton {
+      opacity: 0.85;
+      display: flex;
+    }
   }
 
   .footer {
@@ -23,6 +45,10 @@
     .name {
       width: 90%;
       margin-bottom: 15px;
+    }
+
+    .price {
+      width: 10%;
     }
   }
 }
