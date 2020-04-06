@@ -5,6 +5,7 @@ import HomePage from "./pages/homepage/Homepage.components";
 import ShopPage from "./pages/shop/ShopPage.component";
 import Header from "./components/header/header.component";
 import SignInSignUpPage from "./pages/signinsignup/signin-signup.component";
+import CheckoutPage from "./pages/checkout/checkoutpage.component";
 import { Route, Switch } from "react-router-dom";
 import { auth, createUserDocument } from "./firebase/firebase.utils";
 import { setCurrentUser } from "./redux/user/user.actions";
@@ -45,6 +46,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
+          <Route exact path="/checkout" component={CheckoutPage} />
           <Route
             exact
             path="/signin"
