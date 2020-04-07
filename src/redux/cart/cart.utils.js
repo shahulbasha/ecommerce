@@ -13,3 +13,23 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
 
   return [...cartItems, { ...cartItemToAdd, quantity: 1 }];
 };
+
+export const removeItemFromCart = (cartItems, cartItemToRemove) => {
+  const existingCartItem = cartItems.find(cartItem => {
+    return cartItem.id === cartItemToRemove.id;
+  });
+
+  if (existingCartItem.quantity !== 1) {
+    return cartItems.map(cartItem => {
+      return cartItem.id === cartItemToRemove.id
+        ? { ...cartItem, quantity: cartItem.quantity - 1 }
+        : cartItem;
+    });
+  }
+  return cartItems.filter(item => item.id !== cartItemToRemove.id);
+};
+
+export const clearItemFromCart = (cartItems, cartItemToClear) => {
+  console.log("clear");
+  return cartItems.filter(item => item.id !== cartItemToClear.id);
+};
