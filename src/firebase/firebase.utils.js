@@ -10,7 +10,7 @@ const config = {
   storageBucket: "jb-clothing-db.appspot.com",
   messagingSenderId: "1062171111683",
   appId: "1:1062171111683:web:48d438a13e2f79bce5b936",
-  measurementId: "G-B0S2CH3LZW"
+  measurementId: "G-B0S2CH3LZW",
 };
 
 export const createUserDocument = async (userAuth, additionalData) => {
@@ -28,7 +28,7 @@ export const createUserDocument = async (userAuth, additionalData) => {
         displayName,
         email,
         createdAt,
-        ...additionalData
+        ...additionalData,
       });
     } catch (error) {
       console.log("Error creating user" + error.message);
@@ -37,6 +37,37 @@ export const createUserDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
+export const convertCollectionsToMap = (collectionsSnapshot) => {
+  const transformedCollection = collectionsSnapshot.docs.map((doc) => {
+    const { title, items } = doc.data();
+    return {
+      id: doc.id,
+      title,
+      items,
+      routeName: encodeURI(title.toLowerCase()),
+    };
+  });
+
+  return transformedCollection.reduce((accumulatedValue, collection) => {
+    accumulatedValue[collection.title.toLowerCase()] = collection;
+    return accumulatedValue;
+  }, {});
+};
+
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const collectionRef = firestore.collection(collectionKey);
+
+  const batch = firestore.batch();
+  objectsToAdd.forEach((obj) => {
+    const docRef = collectionRef.doc();
+    batch.set(docRef, obj);
+  });
+
+  return await batch.commit();
+};
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();
